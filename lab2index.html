@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Babylon.js Scene</title>
+
+    <!-- Babylon.js CDN -->
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+</head>
+<body>
+    <canvas id="renderCanvas" style="width:100%; height:100%;"></canvas>
+
+    <script>
+        const canvas = document.getElementById("renderCanvas");
+        const engine = new BABYLON.Engine(canvas, true);
+
+// PASTE createScene FUNCTION HERE
+    const createScene = function () {
+
+    const scene = new BABYLON.Scene(engine);
+
+    const camera = new BABYLON.ArcRotateCamera(
+    "camera",Math.PI / 2, Math.PI / 3, 8, BABYLON.Vector3.Zero(), scene);
+    
+    camera.attachControl(canvas, true);
+
+    const light = new BABYLON.HemisphericLight("light",new BABYLON.Vector3(0, 1, 0),scene);
+    
+    light.intensity = 0.9;
+
+    const box = BABYLON.MeshBuilder.CreateBox("box", { size: 1 }, scene);
+    box.position.x = -2;
+
+    const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 1 }, scene);
+
+    const cylinder = BABYLON.MeshBuilder.CreateCylinder("cylinder",{ height: 1.5, diameter: 0.8 },scene);
+    
+    cylinder.position.x = 2;
+    cylinder.position.y = 0.75;
+
+    const ground = BABYLON.MeshBuilder.CreateGround("ground",{ width: 8, height: 8 },scene);
+
+    return scene;
+
+};
+
+    const scene = createScene();
+
+    engine.runRenderLoop(() => {scene.render();});
+
+    window.addEventListener("resize", () => {engine.resize();});
+    
+    </script>
+</body>
+</html>
